@@ -1,0 +1,47 @@
+<div class="h-full border-2 border-white rounded-lg p-10 bg-white">
+    <ng-template #addForm>
+        <form #form="ngForm" [formGroup]="curForm">
+            <div class="flex h-full flex-col p-5 bg-white">
+                <label class="text-2xl font-bold mb-5">Assign Task To User</label>
+                <label class="text-xs text-stone-300">Assign user*</label>
+                <select formControlName="assigneeId" class="mb-5 rounded-lg p-2 border">
+                    <option value="" disabled selected>Select user</option>
+                    <option *ngFor="let c of userList" [ngValue]="c.id">{{ c.name }}</option>
+                </select>
+                <div class="flex self-end gap-1">
+                    <button (click)="onSubmit()" [className]="greenButtonClass" type="button">Submit</button>
+                    <button (click)="onClose()" [className]="greenButtonClass" type="button">Close</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #alert>
+        <div class="flex h-full flex-col p-5 bg-white">
+            <label>Please fill all the required fields!</label>
+            <div class="flex self-end gap-1">
+                <button (click)="alertRef.hide()" [className]="greenButtonClass" type="button">OK</button>
+            </div>
+        </div>
+    </ng-template>
+    <div class="flex flex-col">
+        <a routerLink="/task" href="javascript:void(0)" class="hover:text-blue-600 mb-8">{{backText}}</a>
+        <label class="text-2xl font-bold mb-5">Task Detail</label>
+        <label class="text-xs font-bold">Title</label>
+        <div class="mb-4">{{currentTask.title}}</div>
+        <label class="text-xs font-bold">Description</label>
+        <div class="mb-4">{{currentTask.description}}</div>
+        <label class="text-xs font-bold">Assigned to</label>
+        <div class="mb-4">{{assigneeName}}</div>
+        <label class="text-xs font-bold">Status</label>
+        <div class="p-1 rounded-full py-2 px-4 bg-green-300 text-green-700 w-fit mb-5" *ngIf="currentTask.completed">
+            Completed
+        </div>
+        <div class="p-1 rounded-full py-2 px-4 bg-purple-300 text-purple-700 w-fit mb-5" *ngIf="!currentTask.completed">
+            In Progress
+        </div>
+        <div class="flex self-end gap-1">
+            <button (click)="onOpenAssign()" [className]="greenButtonClass" type="button">Assign to user</button>
+            <button (click)="onComplete()" [className]="greenButtonClass" type="button" *ngIf="!currentTask.completed">Complete Task</button>
+        </div>
+    </div>
+</div>

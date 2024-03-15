@@ -1,0 +1,86 @@
+<div class="h-full border-2 border-white p-10 bg-white overflow-auto min-h-screen">
+    <ng-template #addForm>
+        <form #form="ngForm" [formGroup]="curNewTaskForm">
+            <div class="flex h-full flex-col p-5 bg-white">
+                <label class="text-2xl font-bold mb-5">Add new task</label>
+                <label class="text-xs text-stone-300">Title*</label>
+                <input class="w-full mb-5 rounded-lg p-2 border" type="text" placeholder="Type Title here"
+                    formControlName="title">
+                <label class="text-xs text-stone-300">Description</label>
+                <textarea class="input" type="text" placeholder="Type description here" formControlName="description"
+                    class="w-full mb-5 rounded-lg p-2 border"></textarea>
+                <label class="text-xs text-stone-300">Assign user</label>
+                <select formControlName="assigneeId" class="mb-5 rounded-lg p-2 border">
+                    <option value="" disabled selected>Select user</option>
+                    <option *ngFor="let c of userList" [ngValue]="c.id">{{ c.name }}</option>
+                </select>
+                <div class="flex self-end gap-1">
+                    <button (click)="onSubmit()" [className]="greenButtonClass" type="button">Submit</button>
+                    <button (click)="onClose()" [className]="greenButtonClass" type="button">Close</button>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #alert>
+        <div class="flex h-full flex-col p-5 bg-white">
+            <label>Please fill all the required fields!</label>
+            <div class="flex self-end gap-1">
+                <button (click)="alertRef.hide()" [className]="greenButtonClass" type="button">OK</button>
+            </div>
+        </div>
+    </ng-template>
+    <div class="flex mb-10">
+        <label class="text-2xl font-bold self-center">List Tasks</label>
+        <div class="flex ml-auto gap-1">
+            <div class="flex flex-col">
+                <label class="text-xs text-stone-300">Search by title</label>
+                <input class="w-full rounded-lg p-2 border" type="text" placeholder="Type here..."
+                    [ngModel]="searchByTitle" (ngModelChange)="onSearchByTitleChange($event)">
+            </div>
+            <div class="flex flex-col">
+                <label class="text-xs text-stone-300">Status</label>
+                <select class="w-full rounded-lg p-2 border" [ngModel]="selectedStatus"
+                    (ngModelChange)="onSelectedStatusChange($event)">
+                    <option *ngFor="let item of dropdownList" [value]="item">
+                        {{item}}
+                    </option>
+                </select>
+            </div>
+            <div class="flex flex-col self-end">
+                <button (click)="onCreateInit()" [className]="greenButtonClass" type="button">Create Task</button>
+            </div>
+        </div>
+    </div>
+    <div class="flex mb-5">
+        <div
+            class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700 w-full">
+            <ul class="flex flex-wrap -mb-px">
+                <li class="w-6/12 border-b-2" (click)="onIsUserFilterChange(false)"
+                    [ngClass]="{'border-blue-600 text-blue-600 active dark:text-blue-500 dark:border-blue-500': isUserFilter == false, 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': isUserFilter == true}">
+                    <a href="javascript:void(0)" class="inline-block p-4 rounded-t-lg">All</a>
+                </li>
+                <li class="w-6/12 border-b-2" (click)="onIsUserFilterChange(true)"
+                    [ngClass]="{'border-blue-600 text-blue-600 active dark:text-blue-500 dark:border-blue-500': isUserFilter == true, 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300': isUserFilter == false}">
+                    <a href="javascript:void(0)" class="inline-block p-4 rounded-t-lg">Assign to me</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngFor="let item of taskList" class="flex mb-2">
+        <div class="hover:cursor-pointer hover:text-sky-400 self-center" (click)="onNavigate(item.id)">
+            {{item.title}}
+        </div>
+        <div class="ml-auto p-1 rounded-full py-2 px-4 bg-green-300 text-green-700" *ngIf="item.completed">
+            Completed
+        </div>
+        <div class="ml-auto p-1 rounded-full py-2 px-4 bg-purple-300 text-purple-700" *ngIf="!item.completed">
+            In Progress
+        </div>
+    </div>
+    <div *ngIf="taskList.length == 0" class="text-center p-12">
+        <div class="flex flex-col items-center">
+            <img alt="icon" src="assets/images/empty.png" class="w-24" />
+            List is empty!
+        </div>
+    </div>
+</div>

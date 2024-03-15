@@ -1,0 +1,28 @@
+<div class="h-full overflow-auto min-h-screen bg-slate-300"> 
+    <div class="flex">
+        <div class="w-1/5 p-10">
+            <div class="flex items-center mb-12">
+                <div class="text-2xl font-bold">Task Management</div>
+            </div>
+            <div class="flex items-center mb-6 hover:cursor-pointer hover:text-blue-400">
+                <img alt="icon" src="assets/images/home.png" class="w-6 h-6 mr-2" />
+                <a class="text-xl" routerLink="/">Home</a>
+            </div>
+            <div class="flex items-center mb-6 hover:cursor-pointer hover:text-blue-400">
+                <img alt="icon" src="assets/images/to-do-list.png" class="w-6 h-6 mr-2" />
+                <a class="text-xl" routerLink="/task">Task</a>
+            </div>
+            <div class="flex items-center mb-6 hover:cursor-pointer hover:text-blue-400">
+                <img alt="icon" src="assets/images/user.png" class="w-6 h-6 mr-2" />
+                <a class="text-xl" routerLink="/user">User</a>
+            </div>
+        </div>
+        <div class="w-4/5 flex flex-col">
+            <div class="flex h-12 w-full bg-white">
+                <div class="text-lg font-bold ml-auto p-2">Welcome {{currentUser.name}}</div>
+            </div>
+            <router-outlet />
+        </div>
+    </div>
+</div>
+

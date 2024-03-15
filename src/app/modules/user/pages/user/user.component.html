@@ -1,0 +1,19 @@
+<div class="h-full border-2 border-white p-10 bg-white overflow-auto min-h-screen">
+    <div class="flex flex-col">
+        <label class="text-2xl font-bold mb-5">User</label>
+        <form #form="ngForm" [formGroup]="curForm">
+            <div class="flex h-full flex-col p-5 bg-white">
+                <label class="text-xs text-stone-300">Current User</label>
+                <div class="mb-4">{{currentUser?.name}}</div>
+                <label class="text-xs text-stone-300">Select User</label>
+                <select formControlName="assigneeId" class="mb-5 rounded-lg p-2 border">
+                    <option value="" disabled selected>Select user</option>
+                    <option *ngFor="let c of userList" [ngValue]="c.id">{{ c.name }}</option>
+                </select>
+                <div class="flex self-end gap-1">
+                    <button (click)="changeUser()" [className]="greenButtonClass" type="button">Change User</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
